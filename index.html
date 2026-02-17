@@ -272,52 +272,100 @@
   </script>
 
   <script>
-  // Track readiness
+  // --- persistence key ---
+  const MS_KEY = "gretail_messenger_open";
+
+  // track ready state
   window.__messengerReady = false;
 
-  // Subscribe to Messenger.ready
-  Genesys("subscribe", "Messenger.ready", function () {
-    console.log("Messenger ready");
-    window.__messengerReady = true;
-  });
+  // helper: check if we should auto-open
+  function shouldAutoOpenMessenger() {
+    try {
+      return localStorage.getItem(MS_KEY) === "1";
+    } catch (e) { return false; }
+  }
 
-  // Open Messenger safely
+  // helper: mark open state
+  function markMessengerOpen() {
+    try { localStorage.setItem(MS_KEY, "1"); } catch (e) {}
+  }
+  function markMessengerClosed() {
+    try { localStorage.removeItem(MS_KEY); } catch (e) {}
+  }
+
+  // open messenger safely and remember that we opened it
   function openMessenger() {
     if (!window.__messengerReady) {
-      console.log("Messenger not ready yet");
+      console.log("Messenger not ready yet — will open once ready");
+      // optional: set flag so it opens when ready
+      markMessengerOpen();
       return;
     }
-    Genesys("command", "Messenger.open", {}, function(){}, function(err){
-      console.error("Messenger open failed:", err);
+    Genesys("command", "Messenger.open", {}, function(){
+      markMessengerOpen();
+    }, function(err){
+      console.error("Messenger.open failed", err);
     });
   }
 
-  // Clear conversation safely
-  function clearMessenger() {
+  // close/clear messenger safely and forget open state
+  function closeMessenger() {
     if (!window.__messengerReady) return;
-    Genesys("command", "Messenger.clear", {}, function(){}, function(err){
-      console.error("Messenger clear failed:", err);
+    Genesys("command", "Messenger.close", {}, function(){
+      markMessengerClosed();
+    }, function(err){
+      // Not all deployments expose "close" command; fallback to clear
+      console.warn("Messenger.close failed, attempting clear", err);
+      Genesys("command", "Messenger.clear", {}, function(){ markMessengerClosed(); }, function(e){ console.error("clear failed", e); });
     });
   }
 
-  // Detect hard reload
+  // Detect hard reload if you still want to clear on reloads (optional)
   function isHardReload() {
     try {
-      const nav = performance.getEntriesByType("navigation")[0];
-      return nav && nav.type === "reload";
-    } catch (e) {
-      return false;
-    }
+      const nav = performance.getEntriesByType("navigation")?.[0];
+      if (nav && nav.type) return nav.type === "reload";
+      return performance.navigation && performance.navigation.type === 1;
+    } catch (e) { return false; }
   }
 
-  // Clear conversation ONLY on hard refresh
-  Genesys("subscribe", "Messenger.ready", function () {
-    if (isHardReload()) {
-      clearMessenger();
-    }
-  });
+  // Subscribe to Messenger.ready once the SDK is queued/loaded
+  // (the Genesys bootstrap pushes args to the queue; this will work once Genesys is available)
+  try {
+    Genesys("subscribe", "Messenger.ready", function () {
+      console.log("Messenger.ready fired");
+      window.__messengerReady = true;
+
+      // If the stored state says it should be open, open it now
+      if (shouldAutoOpenMessenger()) {
+        Genesys("command", "Messenger.open", {}, function(){}, function(err){ console.error("open failed", err); });
+      }
+
+      // If you want to clear on hard reloads only, do it here:
+      // if (isHardReload()) {
+      //   Genesys("command", "Messenger.clear", {}, function(){ console.log("Cleared on hard reload"); }, function(e){ console.error(e); });
+      // }
+    });
+  } catch (e) {
+    // Genesys might not be loaded yet if this script runs before bootstrap script is inserted.
+    // The bootstrap's queue will run subscribe once available; if you see errors, ensure the bootstrap snippet is before this one.
+    console.error("Failed to subscribe to Messenger.ready — is the Genesys bootstrap present?", e);
+  }
+
+  // Optional: listen for a close/minimize event to clear the flag.
+  // Not all deployments send the same events; try 'Messenger.closed' or 'Messenger.minimized' depending on your platform.
+  try {
+    Genesys("subscribe", "Messenger.closed", function () {
+      console.log("Messenger.closed event received — clearing open flag");
+      markMessengerClosed();
+    });
+  } catch (e) { /* ignore */ }
+
+  // Expose functions globally (if your app uses them)
+  window.openMessenger = openMessenger;
+  window.closeMessenger = closeMessenger;
 </script>
-</head>
+
 
 <body>
   <header class="nav">
