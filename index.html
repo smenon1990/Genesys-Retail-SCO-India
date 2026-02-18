@@ -1,261 +1,539 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GRetail — TVs that vibe</title>
-
   <style>
-    :root{
-      --bg:#070712;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
-      --text:#eef0ff;
-      --muted: rgba(238,240,255,.72);
-      --stroke: rgba(255,255,255,.14);
+    :root {
+      --bg: #070712;
+      --panel: rgba(255, 255, 255, .06);
+      --panel2: rgba(255, 255, 255, .09);
+      --text: #eef0ff;
+      --muted: rgba(238, 240, 255, .72);
+      --stroke: rgba(255, 255, 255, .14);
 
-      --neon1:#7C3AED;
-      --neon2:#22D3EE;
-      --neon3:#FB7185;
+      --neon1: #7C3AED;
+      --neon2: #22D3EE;
+      --neon3: #FB7185;
 
       --radius: 18px;
-      --shadow: 0 18px 50px rgba(0,0,0,.55);
-      --shadow2: 0 12px 34px rgba(0,0,0,.40);
+      --shadow: 0 18px 50px rgba(0, 0, 0, .55);
+      --shadow2: 0 12px 34px rgba(0, 0, 0, .40);
       --max: 1180px;
     }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
       color: var(--text);
       background:
-        radial-gradient(900px 600px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
-        radial-gradient(900px 600px at 80% 10%, rgba(34,211,238,.25), transparent 60%),
-        radial-gradient(900px 600px at 70% 120%, rgba(251,113,133,.20), transparent 60%),
+        radial-gradient(900px 600px at 20% -10%, rgba(124, 58, 237, .35), transparent 60%),
+        radial-gradient(900px 600px at 80% 10%, rgba(34, 211, 238, .25), transparent 60%),
+        radial-gradient(900px 600px at 70% 120%, rgba(251, 113, 133, .20), transparent 60%),
         linear-gradient(180deg, #060614 0%, #070712 60%, #05050f 100%);
     }
-    a{ color:inherit; text-decoration:none; }
-    img{ max-width:100%; display:block; }
-    button, input, select{ font: inherit; }
-    .container{ width:min(var(--max), calc(100% - 32px)); margin:0 auto; }
 
-    .nav{
-      position:sticky; top:0; z-index:20;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
       backdrop-filter: blur(18px);
-      background: rgba(7,7,18,.55);
+      background: rgba(7, 7, 18, .55);
       border-bottom: 1px solid var(--stroke);
     }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:14px 0;
-    }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px; }
-    .badge{
-      font-size:12px; padding:4px 10px;
-      border:1px solid var(--stroke); border-radius:999px;
-      background: rgba(255,255,255,.06); color: var(--muted);
-    }
-    .logo-dot{
-      width:12px; height:12px; border-radius:999px;
-      background: linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3));
-      box-shadow: 0 0 24px rgba(34,211,238,.35);
-    }
-    .nav-links{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    .nav-links a{
-      padding:10px 12px; border:1px solid transparent; border-radius:999px;
-      color: var(--muted);
-    }
-    .nav-links a:hover{ border-color: var(--stroke); background: rgba(255,255,255,.05); color: var(--text); }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid var(--stroke); background: rgba(255,255,255,.06);
-    }
-    .count{
-      display:inline-flex; min-width:22px; height:22px;
-      align-items:center; justify-content:center;
-      border-radius:999px; background: rgba(255,255,255,.12);
-      border:1px solid var(--stroke); font-size:12px; padding:0 7px; color: var(--text);
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
     }
 
-    .card{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      border-radius: var(--radius);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .06);
+      color: var(--muted);
+    }
+
+    .logo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3));
+      box-shadow: 0 0 24px rgba(34, 211, 238, .35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      border-color: var(--stroke);
+      background: rgba(255, 255, 255, .05);
+      color: var(--text);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .count {
+      display: inline-flex;
+      min-width: 22px;
+      height: 22px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .12);
+      border: 1px solid var(--stroke);
+      font-size: 12px;
+      padding: 0 7px;
+      color: var(--text);
+    }
+
+    .card {
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .06);
+      border-radius: 18px;
       box-shadow: var(--shadow2);
     }
-    .card-pad{ padding:18px; }
-    .glow{ position:relative; }
-    .glow:before{
-      content:""; position:absolute; inset:-2px;
-      border-radius: calc(var(--radius) + 2px);
-      background: linear-gradient(135deg, rgba(124,58,237,.55), rgba(34,211,238,.45), rgba(251,113,133,.55));
-      filter: blur(18px); opacity:.7; z-index:-1;
+
+    .card-pad {
+      padding: 18px;
     }
 
-    .section{ padding: 14px 0 34px; }
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:12px; margin: 18px 0 12px;
+    .glow {
+      position: relative;
     }
-    .section-title h2{ margin:0; font-size:18px; letter-spacing:.2px; }
-    .section-title .sub{ color: var(--muted); font-size:13px; }
 
-    .hero{ padding:34px 0 14px; }
-    .hero-grid{ display:grid; grid-template-columns: 1.25fr .75fr; gap:16px; }
-    @media (max-width: 900px){ .hero-grid{ grid-template-columns:1fr; } }
-    .hero h1{
-      margin:0 0 10px;
+    .glow:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, .55), rgba(34, 211, 238, .45), rgba(251, 113, 133, .55));
+      filter: blur(18px);
+      opacity: .7;
+      z-index: -1;
+    }
+
+    .section {
+      padding: 14px 0 34px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 18px 0 12px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+
+    .section-title .sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      padding: 34px 0 14px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
       font-size: clamp(26px, 3.2vw, 44px);
-      line-height:1.08; letter-spacing:-.6px;
+      line-height: 1.08;
+      letter-spacing: -.6px;
     }
-    .hero p{ margin:0 0 16px; color: var(--muted); max-width: 70ch; }
-    .cta-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
 
-    .btn{
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
+    .hero p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .06);
       color: var(--text);
-      padding:11px 14px;
+      padding: 11px 14px;
       border-radius: 14px;
-      cursor:pointer;
+      cursor: pointer;
       transition: transform .06s ease, background .2s ease, border-color .2s ease;
-      user-select:none;
+      user-select: none;
     }
-    .btn:hover{ background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.22); }
-    .btn:active{ transform: translateY(1px); }
-    .btn-primary{
+
+    .btn:hover {
+      background: rgba(255, 255, 255, .10);
+      border-color: rgba(255, 255, 255, .22);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
       border-color: transparent;
-      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.85));
-      box-shadow: 0 18px 38px rgba(124,58,237,.18);
+      background: linear-gradient(135deg, rgba(124, 58, 237, .95), rgba(34, 211, 238, .85));
+      box-shadow: 0 18px 38px rgba(124, 58, 237, .18);
     }
-    .btn-primary:hover{ filter: brightness(1.05); }
-    .btn-ghost{ background: transparent; }
 
-    .kpis{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-    .kpi{
-      padding:12px; border-radius: 14px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
+    .btn-primary:hover {
+      filter: brightness(1.05);
     }
-    .kpi b{ display:block; font-size:16px; }
-    .kpi span{ color: var(--muted); font-size:13px; }
 
-    .toolbar{
-      display:flex; gap:10px; flex-wrap:wrap;
-      align-items:center; justify-content:space-between;
+    .btn-ghost {
+      background: transparent;
+    }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .kpi {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .kpi b {
+      display: block;
+      font-size: 16px;
+    }
+
+    .kpi span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
       padding: 14px;
     }
-    .field{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    .input, .select{
-      background: rgba(255,255,255,.06);
-      border:1px solid var(--stroke);
+
+    .field {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input,
+    .select {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid var(--stroke);
       color: var(--text);
       border-radius: 12px;
-      padding:10px 12px;
-      outline:none;
+      padding: 10px 12px;
+      outline: none;
       min-width: 200px;
     }
-    .select{ min-width: 180px; }
 
-    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
-    @media (max-width: 980px){ .grid{ grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 650px){ .grid{ grid-template-columns: 1fr; } }
+    .select {
+      min-width: 180px;
+    }
 
-    .product{ overflow:hidden; }
-    .product .imgwrap{
-      background: linear-gradient(135deg, rgba(124,58,237,.22), rgba(34,211,238,.16), rgba(251,113,133,.18));
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 650px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .product {
+      overflow: hidden;
+    }
+
+    .product .imgwrap {
+      background: linear-gradient(135deg, rgba(124, 58, 237, .22), rgba(34, 211, 238, .16), rgba(251, 113, 133, .18));
       border-bottom: 1px solid var(--stroke);
       padding: 14px;
     }
-    .product .imgwrap img{
-      height: 180px; width: 100%;
+
+    .product .imgwrap img {
+      height: 180px;
+      width: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 20px 34px rgba(0,0,0,.55));
+      filter: drop-shadow(0 20px 34px rgba(0, 0, 0, .55));
     }
-    .product .body{ padding: 14px; }
-    .product h3{ margin: 0 0 6px; font-size: 16px; }
-    .meta{ display:flex; justify-content:space-between; gap:10px; align-items:center; margin-bottom:8px; }
-    .price{ font-weight: 900; letter-spacing:.2px; }
-    .small{ font-size: 12px; color: var(--muted); }
-    .tags{ display:flex; flex-wrap:wrap; gap:6px; margin: 10px 0 12px; }
-    .tag{
-      font-size:12px; padding:6px 10px;
-      border-radius:999px; border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06); color: var(--muted);
-    }
-    .actions{ display:flex; gap:8px; flex-wrap:wrap; }
-    .iconbtn{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius: 14px;
-      border:1px solid var(--stroke); background: rgba(255,255,255,.06);
-      cursor:pointer;
-    }
-    .iconbtn:hover{ background: rgba(255,255,255,.10); }
-    .heart{ color: var(--muted); }
-    .heart.on{ color: var(--neon3); }
 
-    .table{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: var(--radius);
-      border:1px solid var(--stroke);
+    .product .body {
+      padding: 14px;
     }
-    .table th, .table td{
-      padding: 12px;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      text-align:left; vertical-align: top;
-    }
-    .table th{
-      color: var(--muted); font-weight:800;
-      background: rgba(255,255,255,.04);
-    }
-    .table tr:last-child td{ border-bottom:none; }
 
-    .split{ display:grid; grid-template-columns: 1.15fr .85fr; gap:14px; }
-    @media (max-width: 900px){ .split{ grid-template-columns: 1fr; } }
+    .product h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
 
-    .summary{ padding: 14px; }
-    .summary-row{
-      display:flex; justify-content:space-between;
-      padding: 10px 0;
-      border-bottom:1px dashed rgba(255,255,255,.14);
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    .small {
+      font-size: 12px;
       color: var(--muted);
     }
-    .summary-row b{ color: var(--text); }
-    .summary-row:last-child{ border-bottom:none; }
 
-    .notice{
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0 12px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .06);
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .iconbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: rgba(255, 255, 255, .06);
+      cursor: pointer;
+    }
+
+    .iconbtn:hover {
+      background: rgba(255, 255, 255, .10);
+    }
+
+    .heart {
+      color: var(--muted);
+    }
+
+    .heart.on {
+      color: var(--neon3);
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--stroke);
+    }
+
+    .table th,
+    .table td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      color: var(--muted);
+      font-weight: 800;
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .summary {
+      padding: 14px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, .14);
+      color: var(--muted);
+    }
+
+    .summary-row b {
+      color: var(--text);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .notice {
       padding: 12px 14px;
       border: 1px solid var(--stroke);
       border-radius: 14px;
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
       color: var(--muted);
     }
-    hr.sep{ border:0; border-top:1px solid rgba(255,255,255,.12); margin:14px 0; }
-    .footer{
+
+    hr.sep {
+      border: 0;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+      margin: 14px 0;
+    }
+
+    .footer {
       padding: 26px 0 34px;
       color: var(--muted);
       font-size: 13px;
-      border-top: 1px solid rgba(255,255,255,.10);
+      border-top: 1px solid rgba(255, 255, 255, .10);
       margin-top: 22px;
     }
 
-    #toast{
-      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
-      padding:12px 14px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(0,0,0,.55);
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      background: rgba(0, 0, 0, .55);
       backdrop-filter: blur(10px);
-      color:white; box-shadow: 0 18px 40px rgba(0,0,0,.45);
-      z-index:999; opacity:0; transition: opacity .2s ease;
-      pointer-events:none;
+      color: white;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity .2s ease;
+      pointer-events: none;
     }
   </style>
+</head>
 
-  <!-- ✅ Genesys Web Messaging bootstrap (APS1) -->
+<body>
+  <!-- Genesys Web Messaging bootstrap -->
   <script type="text/javascript" charset="utf-8">
     (function (g, e, n, es, ys) {
       g['_genesysJs'] = e;
@@ -267,106 +545,21 @@
     })(window, 'Genesys', 'https://apps.aps1.pure.cloud/genesys-bootstrap/genesys.min.js', {
       environment: 'prod-aps1',
       deploymentId: 'a7c8568b-d96d-4dab-9378-2a39d61e34ef'
-      // debug: true
     });
   </script>
+
   <script>
-  // --- persistence key ---
-  const MS_KEY = "gretail_messenger_open";
+    window.Genesys("subscribe", "Journey.ready", function () {
+      console.log("Journey ready");
 
-  // track ready state
-  window.__messengerReady = false;
-
-  // helper: check if we should auto-open
-  function shouldAutoOpenMessenger() {
-    try {
-      return localStorage.getItem(MS_KEY) === "1";
-    } catch (e) { return false; }
-  }
-
-  // helper: mark open state
-  function markMessengerOpen() {
-    try { localStorage.setItem(MS_KEY, "1"); } catch (e) {}
-  }
-  function markMessengerClosed() {
-    try { localStorage.removeItem(MS_KEY); } catch (e) {}
-  }
-
-  // open messenger safely and remember that we opened it
-  function openMessenger() {
-    if (!window.__messengerReady) {
-      console.log("Messenger not ready yet — will open once ready");
-      // optional: set flag so it opens when ready
-      markMessengerOpen();
-      return;
-    }
-    Genesys("command", "Messenger.open", {}, function(){
-      markMessengerOpen();
-    }, function(err){
-      console.error("Messenger.open failed", err);
+      // Send first page view
+      Genesys("command", "Journey.pageview", {
+        page: location.hash || "#/",
+        title: document.title
+      });
     });
-  }
+  </script>
 
-  // close/clear messenger safely and forget open state
-  function closeMessenger() {
-    if (!window.__messengerReady) return;
-    Genesys("command", "Messenger.close", {}, function(){
-      markMessengerClosed();
-    }, function(err){
-      // Not all deployments expose "close" command; fallback to clear
-      console.warn("Messenger.close failed, attempting clear", err);
-      Genesys("command", "Messenger.clear", {}, function(){ markMessengerClosed(); }, function(e){ console.error("clear failed", e); });
-    });
-  }
-
-  // Detect hard reload if you still want to clear on reloads (optional)
-  function isHardReload() {
-    try {
-      const nav = performance.getEntriesByType("navigation")?.[0];
-      if (nav && nav.type) return nav.type === "reload";
-      return performance.navigation && performance.navigation.type === 1;
-    } catch (e) { return false; }
-  }
-
-  // Subscribe to Messenger.ready once the SDK is queued/loaded
-  // (the Genesys bootstrap pushes args to the queue; this will work once Genesys is available)
-  try {
-    Genesys("subscribe", "Messenger.ready", function () {
-      console.log("Messenger.ready fired");
-      window.__messengerReady = true;
-
-      // If the stored state says it should be open, open it now
-      if (shouldAutoOpenMessenger()) {
-        Genesys("command", "Messenger.open", {}, function(){}, function(err){ console.error("open failed", err); });
-      }
-
-      // If you want to clear on hard reloads only, do it here:
-      // if (isHardReload()) {
-      //   Genesys("command", "Messenger.clear", {}, function(){ console.log("Cleared on hard reload"); }, function(e){ console.error(e); });
-      // }
-    });
-  } catch (e) {
-    // Genesys might not be loaded yet if this script runs before bootstrap script is inserted.
-    // The bootstrap's queue will run subscribe once available; if you see errors, ensure the bootstrap snippet is before this one.
-    console.error("Failed to subscribe to Messenger.ready — is the Genesys bootstrap present?", e);
-  }
-
-  // Optional: listen for a close/minimize event to clear the flag.
-  // Not all deployments send the same events; try 'Messenger.closed' or 'Messenger.minimized' depending on your platform.
-  try {
-    Genesys("subscribe", "Messenger.closed", function () {
-      console.log("Messenger.closed event received — clearing open flag");
-      markMessengerClosed();
-    });
-  } catch (e) { /* ignore */ }
-
-  // Expose functions globally (if your app uses them)
-  window.openMessenger = openMessenger;
-  window.closeMessenger = closeMessenger;
-</script>
-
-
-<body>
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="#/">
@@ -381,13 +574,40 @@
         <a class="pill" href="#/cart">Cart <span class="count" data-badge="cart">0</span></a>
       </nav>
     </div>
+    <main class="container" id="app"></main>
+    <div id="toast"></div>
   </header>
+  <script>
+    function isHardReload() {
+      try {
+        const nav = performance.getEntriesByType?.("navigation")?.[0];
+        if (nav && nav.type) return nav.type === "reload";
+      } catch (e) { }
 
-  <main class="container" id="app"></main>
-  <div id="toast"></div>
+      // Legacy fallback
+      try {
+        return performance.navigation && performance.navigation.type === 1;
+      } catch (e) { }
+
+      return false;
+    }
+
+    // Clear Messenger conversation ONLY on hard refresh
+    (function clearMessengerOnHardRefresh() {
+      if (!isHardReload()) return;
+
+      // Wait for Messenger to be ready before calling commands
+      if (typeof window.Genesys === "function") {
+        Genesys("subscribe", "Messenger.ready", function () {
+          Genesys("command", "Messenger.clear");
+          // Optional: ensure it's not open after clearing
+          // Genesys("command", "Messenger.close");
+        });
+      }
+    })();
+  </script>
 
   <script>
-    // ========= Images =========
     const IMG = {
       FLAT_PANEL_PNG: "images/45inchtv.jpg",
       SAMSUNG_SMARTTV: "images/download65.jpg",
@@ -396,95 +616,103 @@
       GENERIC_TV: "images/55-UHD-4k-low-price-online-kerala.jpg"
     };
 
-    // ========= Catalog =========
     const CATALOG = [
       {
-        id:"gr-aura-oled-55",
-        name:"GRetail Aura OLED 55”",
+        id: "gr-aura-oled-55",
+        name: "GRetail Aura OLED 55”",
         price: 89990,
         image: IMG.LG_CURVED_OLED,
-        series:"Aura OLED",
-        sizeIn:55, panel:"OLED", resolution:"4K UHD", refreshHz:120,
-        hdr:"Dolby Vision + HDR10+",
-        gaming:"VRR, ALLM, 2x HDMI 2.1",
-        audio:"40W, Dolby Atmos",
-        os:"GRetail SmartOS",
-        warranty:"2 years",
-        tags:["OLED blacks","120Hz gaming","Dolby Vision"]
+        series: "Aura OLED",
+        sizeIn: 55, panel: "OLED", resolution: "4K UHD", refreshHz: 120,
+        hdr: "Dolby Vision + HDR10+",
+        gaming: "VRR, ALLM, 2x HDMI 2.1",
+        audio: "40W, Dolby Atmos",
+        os: "GRetail SmartOS",
+        warranty: "2 years",
+        tags: ["OLED blacks", "120Hz gaming", "Dolby Vision"]
       },
       {
-        id:"gr-neon-qled-65",
-        name:"GRetail Neon QLED 65”",
+        id: "gr-neon-qled-65",
+        name: "GRetail Neon QLED 65”",
         price: 75990,
         image: IMG.SAMSUNG_SMARTTV,
-        series:"Neon QLED",
-        sizeIn:65, panel:"QLED", resolution:"4K UHD", refreshHz:120,
-        hdr:"HDR10+",
-        gaming:"VRR, ALLM, 4x HDMI",
-        audio:"50W, Virtual Surround",
-        os:"GRetail SmartOS",
-        warranty:"2 years",
-        tags:["Bright QLED","Big screen","Smooth 120Hz"]
+        series: "Neon QLED",
+        sizeIn: 65, panel: "QLED", resolution: "4K UHD", refreshHz: 120,
+        hdr: "HDR10+",
+        gaming: "VRR, ALLM, 4x HDMI",
+        audio: "50W, Virtual Surround",
+        os: "GRetail SmartOS",
+        warranty: "2 years",
+        tags: ["Bright QLED", "Big screen", "Smooth 120Hz"]
       },
       {
-        id:"gr-pulse-mini-led-75",
-        name:"GRetail Pulse Mini-LED 75”",
+        id: "gr-pulse-mini-led-75",
+        name: "GRetail Pulse Mini-LED 75”",
         price: 129990,
         image: IMG.SAMSUNG_E_SERIES,
-        series:"Pulse Mini-LED",
-        sizeIn:75, panel:"Mini-LED", resolution:"4K UHD", refreshHz:144,
-        hdr:"Dolby Vision IQ",
-        gaming:"144Hz VRR, 2x HDMI 2.1",
-        audio:"60W, Dolby Atmos",
-        os:"GRetail SmartOS Pro",
-        warranty:"3 years",
-        tags:["Mini-LED contrast","144Hz","Cinematic HDR"]
+        series: "Pulse Mini-LED",
+        sizeIn: 75, panel: "Mini-LED", resolution: "4K UHD", refreshHz: 144,
+        hdr: "Dolby Vision IQ",
+        gaming: "144Hz VRR, 2x HDMI 2.1",
+        audio: "60W, Dolby Atmos",
+        os: "GRetail SmartOS Pro",
+        warranty: "3 years",
+        tags: ["Mini-LED contrast", "144Hz", "Cinematic HDR"]
       },
       {
-        id:"gr-zen-led-43",
-        name:"GRetail Zen LED 43”",
+        id: "gr-zen-led-43",
+        name: "GRetail Zen LED 43”",
         price: 28990,
         image: IMG.FLAT_PANEL_PNG,
-        series:"Zen LED",
-        sizeIn:43, panel:"LED", resolution:"4K UHD", refreshHz:60,
-        hdr:"HDR10",
-        gaming:"ALLM",
-        audio:"20W",
-        os:"GRetail SmartOS Lite",
-        warranty:"1 year",
-        tags:["Budget 4K","Compact","Everyday smart"]
+        series: "Zen LED",
+        sizeIn: 43, panel: "LED", resolution: "4K UHD", refreshHz: 60,
+        hdr: "HDR10",
+        gaming: "ALLM",
+        audio: "20W",
+        os: "GRetail SmartOS Lite",
+        warranty: "1 year",
+        tags: ["Budget 4K", "Compact", "Everyday smart"]
       },
       {
-        id:"gr-vibe-qned-55",
-        name:"GRetail Vibe QNED 55”",
+        id: "gr-vibe-qned-55",
+        name: "GRetail Vibe QNED 55”",
         price: 62990,
         image: IMG.GENERIC_TV,
-        series:"Vibe QNED",
-        sizeIn:55, panel:"QNED", resolution:"4K UHD", refreshHz:120,
-        hdr:"HDR10 Pro",
-        gaming:"VRR, ALLM, 2x HDMI 2.1",
-        audio:"40W",
-        os:"GRetail SmartOS",
-        warranty:"2 years",
-        tags:["Punchy color","Fast motion","Great value"]
+        series: "Vibe QNED",
+        sizeIn: 55, panel: "QNED", resolution: "4K UHD", refreshHz: 120,
+        hdr: "HDR10 Pro",
+        gaming: "VRR, ALLM, 2x HDMI 2.1",
+        audio: "40W",
+        os: "GRetail SmartOS",
+        warranty: "2 years",
+        tags: ["Punchy color", "Fast motion", "Great value"]
       }
     ];
 
-    // ========= Storage =========
     const LS = {
       CART: "gretail_cart_v1",
       FAVS: "gretail_favs_v1",
-      CMP:  "gretail_compare_v1",
-      ORDER:"gretail_last_order_v1"
+      CMP: "gretail_compare_v1",
+      ORDER: "gretail_last_order_v1"
     };
 
-    const loadJSON = (k, fb) => { try{ const r=localStorage.getItem(k); return r?JSON.parse(r):fb; }catch{ return fb; } };
+    const loadJSON = (k, fb) => { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fb; } catch { return fb; } };
     const saveJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 
     const findTV = (id) => CATALOG.find(x => x.id === id);
-    const formatINR = (n) => "₹" + (n||0).toLocaleString("en-IN", { maximumFractionDigits: 0 });
+    const formatINR = (n) => "₹" + (n || 0).toLocaleString("en-IN", { maximumFractionDigits: 0 });
 
-    // ===================== CART =====================
+    // ---------- helper: open the messenger widget (if available) ----------
+    function openMessenger() {
+      try {
+        if (typeof window.Genesys === "function") {
+          // This works only if your deployment supports Web Messaging UI
+          window.Genesys("command", "Messenger.open");
+        }
+      } catch (e) { }
+    }
+
+    // ===================== CART (FIXED) =====================
     const getCart = () => loadJSON(LS.CART, {});  // { id: qty }
 
     const setCart = (c) => {
@@ -498,7 +726,21 @@
       if (c[id] < 1) delete c[id];
       setCart(c);
 
-      // Optional: open Messenger after add
+      // Journey custom event
+      try {
+        if (typeof window.Genesys === "function") {
+          Genesys("command", "Journey.record", {
+            eventName: "add_to_cart",
+            customAttributes: {
+              productId: id,
+              quantity: qty,
+              page: location.hash || "#/"
+            }
+          })
+        }
+      } catch (e) { }
+
+      // Optional: pop open web messenger
       openMessenger();
     };
 
@@ -510,29 +752,59 @@
       else c[id] = qty;
 
       setCart(c);
+
+      // Optional Journey remove event
+      try {
+        if (typeof window.Genesys === "function" && qty <= 0) {
+          Genesys("command", "Journey.record", {
+            eventName: "remove_from_cart",
+            customAttributes: {
+              productId: id,
+              page: location.hash || "#/"
+            }
+          })
+
+        }
+      } catch (e) { }
     };
 
-    const clearCart = () => setCart({});
+    const clearCart = () => {
+      setCart({});
+
+      // Optional Journey event
+      try {
+        if (typeof window.ac === "function") {
+          Genesys("command", "Journey.record", {
+            eventName: "cart_cleared",
+            customAttributes: {
+              page: location.hash || "#/"
+            }
+          });
+
+
+        }
+      } catch (e) { }
+    };
     // ===================== END CART =====================
 
     // favorites
     const getFavs = () => loadJSON(LS.FAVS, []);
-    const setFavs = (a) => { saveJSON(LS.FAVS,a); updateBadges(); };
+    const setFavs = (a) => { saveJSON(LS.FAVS, a); updateBadges(); };
     const toggleFav = (id) => {
-      const s=new Set(getFavs());
-      s.has(id)?s.delete(id):s.add(id);
+      const s = new Set(getFavs());
+      s.has(id) ? s.delete(id) : s.add(id);
       setFavs([...s]);
       return s.has(id);
     };
 
-    // compare (max 3)
+    // compare
     const getCompare = () => loadJSON(LS.CMP, []);
-    const setCompare = (a) => { saveJSON(LS.CMP,a); updateBadges(); };
+    const setCompare = (a) => { saveJSON(LS.CMP, a); updateBadges(); };
     const toggleCompare = (id) => {
-      const s=new Set(getCompare());
-      if(s.has(id)) s.delete(id);
-      else{
-        if(s.size>=3){ alert("You can compare up to 3 TVs."); return false; }
+      const s = new Set(getCompare());
+      if (s.has(id)) s.delete(id);
+      else {
+        if (s.size >= 3) { alert("You can compare up to 3 TVs."); return false; }
         s.add(id);
       }
       setCompare([...s]);
@@ -540,69 +812,81 @@
     };
     const clearCompare = () => setCompare([]);
 
-    // totals
-    function calcCartTotals(){
-      const cart=getCart();
-      let subtotal=0;
-      const items=Object.entries(cart).map(([id,qty])=>{
-        const tv=findTV(id); if(!tv) return null;
-        const line=tv.price*qty; subtotal+=line;
-        return {...tv, qty, line};
+    function calcCartTotals() {
+      const cart = getCart();
+      let subtotal = 0;
+      const items = Object.entries(cart).map(([id, qty]) => {
+        const tv = findTV(id); if (!tv) return null;
+        const line = tv.price * qty; subtotal += line;
+        return { ...tv, qty, line };
       }).filter(Boolean);
 
-      const shipping = subtotal>60000 ? 0 : (items.length ? 799 : 0);
-      const discount = subtotal>=120000 ? Math.round(subtotal*0.05) : 0;
+      const shipping = subtotal > 60000 ? 0 : (items.length ? 799 : 0);
+      const discount = subtotal >= 120000 ? Math.round(subtotal * 0.05) : 0;
       const total = Math.max(0, subtotal + shipping - discount);
-      return {items, subtotal, shipping, discount, total};
+      return { items, subtotal, shipping, discount, total };
     }
 
-    // order
     const getLastOrder = () => loadJSON(LS.ORDER, null);
-    function placeOrder(customer){
-      const t=calcCartTotals();
-      if(!t.items.length) return null;
-      const now=new Date();
-      const orderId="GR-"+String(now.getFullYear()).slice(-2)+String(now.getMonth()+1).padStart(2,"0")+String(now.getDate()).padStart(2,"0")+"-"+Math.random().toString(36).slice(2,7).toUpperCase();
-      const txId="TXN-"+Math.random().toString(36).slice(2,11).toUpperCase();
-      const order={
+
+    function placeOrder(customer) {
+      const t = calcCartTotals();
+      if (!t.items.length) return null;
+
+      const now = new Date();
+      const orderId = "GR-" + String(now.getFullYear()).slice(-2) + String(now.getMonth() + 1).padStart(2, "0") + String(now.getDate()).padStart(2, "0") + "-" + Math.random().toString(36).slice(2, 7).toUpperCase();
+      const txId = "TXN-" + Math.random().toString(36).slice(2, 11).toUpperCase();
+
+      const order = {
         orderId, txId,
         createdAt: now.toISOString(),
         customer,
-        items: t.items.map(({id,name,price,qty,line,image})=>({id,name,price,qty,line,image})),
-        subtotal:t.subtotal, shipping:t.shipping, discount:t.discount, total:t.total
+        items: t.items.map(({ id, name, price, qty, line, image }) => ({ id, name, price, qty, line, image })),
+        subtotal: t.subtotal, shipping: t.shipping, discount: t.discount, total: t.total
       };
+
       saveJSON(LS.ORDER, order);
       clearCart();
       return order;
     }
 
-    // toast
-    let toastTimer=null;
-    function toast(msg){
-      const el=document.getElementById("toast");
-      el.textContent=msg;
-      el.style.opacity="1";
+    let toastTimer = null;
+    function toast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.style.opacity = "1";
       clearTimeout(toastTimer);
-      toastTimer=setTimeout(()=>el.style.opacity="0", 1600);
+      toastTimer = setTimeout(() => el.style.opacity = "0", 1600);
     }
 
-    // badges
-    function cartCounts(){
-      const c=getCart();
-      return { items: Object.values(c).reduce((a,b)=>a+b,0), unique: Object.keys(c).length };
-    }
-    function updateBadges(){
-      const c=cartCounts();
-      document.querySelectorAll("[data-badge='cart']").forEach(x=>x.textContent=c.items);
-      document.querySelectorAll("[data-badge='favs']").forEach(x=>x.textContent=getFavs().length);
-      document.querySelectorAll("[data-badge='compare']").forEach(x=>x.textContent=getCompare().length);
+    function trackJourneyPage() {
+      try {
+        if (typeof window.Genesys === "function") {
+          Genesys("command", "Journey.pageview", {
+            page: location.hash || "#/",
+            title: document.title
+          });
+        }
+
+      } catch (e) { }
     }
 
-    // ========= Views =========
+    function cartCounts() {
+      const c = getCart();
+      return { items: Object.values(c).reduce((a, b) => a + b, 0), unique: Object.keys(c).length };
+    }
+
+    function updateBadges() {
+      const c = cartCounts();
+      document.querySelectorAll("[data-badge='cart']").forEach(x => x.textContent = c.items);
+      document.querySelectorAll("[data-badge='favs']").forEach(x => x.textContent = getFavs().length);
+      document.querySelectorAll("[data-badge='compare']").forEach(x => x.textContent = getCompare().length);
+    }
+
     const app = document.getElementById("app");
     const badge = document.getElementById("routeBadge");
 
-    function viewHome(){
+    function viewHome() {
       badge.textContent = "TV Store";
       app.innerHTML = `
         <section class="hero">
@@ -648,29 +932,29 @@
       `;
     }
 
-    function renderCatalogGrid({query="", sort="featured", panel="all", size="all"}){
-      let list=[...CATALOG];
-      const q=query.trim().toLowerCase();
-      if(q){
-        list=list.filter(x =>
+    function renderCatalogGrid({ query = "", sort = "featured", panel = "all", size = "all" }) {
+      let list = [...CATALOG];
+      const q = query.trim().toLowerCase();
+      if (q) {
+        list = list.filter(x =>
           x.name.toLowerCase().includes(q) ||
           x.series.toLowerCase().includes(q) ||
           x.panel.toLowerCase().includes(q)
         );
       }
-      if(panel!=="all") list=list.filter(x=>x.panel===panel);
-      if(size!=="all"){
-        const s=Number(size);
-        if(!Number.isNaN(s)) list=list.filter(x=>x.sizeIn===s);
+      if (panel !== "all") list = list.filter(x => x.panel === panel);
+      if (size !== "all") {
+        const s = Number(size);
+        if (!Number.isNaN(s)) list = list.filter(x => x.sizeIn === s);
       }
-      if(sort==="price-asc") list.sort((a,b)=>a.price-b.price);
-      if(sort==="price-desc") list.sort((a,b)=>b.price-a.price);
-      if(sort==="size-desc") list.sort((a,b)=>b.sizeIn-a.sizeIn);
+      if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
+      if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+      if (sort === "size-desc") list.sort((a, b) => b.sizeIn - a.sizeIn);
 
-      const favs=new Set(getFavs());
-      const cmps=new Set(getCompare());
+      const favs = new Set(getFavs());
+      const cmps = new Set(getCompare());
 
-      return list.map(tv=>`
+      return list.map(tv => `
         <article class="card product">
           <div class="imgwrap">
             <img src="${tv.image}" alt="${tv.name}" loading="lazy">
@@ -685,17 +969,17 @@
             </div>
 
             <div class="tags">
-              ${tv.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+              ${tv.tags.map(t => `<span class="tag">${t}</span>`).join("")}
             </div>
 
             <div class="actions">
               <button class="btn btn-primary" data-add="${tv.id}">Add to cart</button>
               <button class="iconbtn" data-compare="${tv.id}">
-                <span>Compare</span><span class="small">${cmps.has(tv.id)?"✓":"+"}</span>
+                <span>Compare</span><span class="small">${cmps.has(tv.id) ? "✓" : "+"}</span>
               </button>
               <button class="iconbtn" data-fav="${tv.id}">
-                <span class="heart ${favs.has(tv.id)?"on":""}">♥</span>
-                <span>${favs.has(tv.id)?"Saved":"Favorite"}</span>
+                <span class="heart ${favs.has(tv.id) ? "on" : ""}">♥</span>
+                <span>${favs.has(tv.id) ? "Saved" : "Favorite"}</span>
               </button>
             </div>
           </div>
@@ -703,28 +987,28 @@
       `).join("");
     }
 
-    function wireProductButtons(root){
-      root.querySelectorAll("[data-add]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{ addToCart(btn.dataset.add,1); toast("Added to cart"); });
+    function wireProductButtons(root) {
+      root.querySelectorAll("[data-add]").forEach(btn => {
+        btn.addEventListener("click", () => { addToCart(btn.dataset.add, 1); toast("Added to cart"); });
       });
-      root.querySelectorAll("[data-fav]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const on=toggleFav(btn.dataset.fav);
+      root.querySelectorAll("[data-fav]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const on = toggleFav(btn.dataset.fav);
           btn.querySelector(".heart").classList.toggle("on", on);
           btn.querySelector("span:nth-child(2)").textContent = on ? "Saved" : "Favorite";
           toast(on ? "Saved to favorites" : "Removed from favorites");
         });
       });
-      root.querySelectorAll("[data-compare]").forEach(btn=>{
-        btn.addEventListener("click", ()=>{
-          const on=toggleCompare(btn.dataset.compare);
+      root.querySelectorAll("[data-compare]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const on = toggleCompare(btn.dataset.compare);
           btn.querySelector(".small").textContent = on ? "✓" : "+";
           toast(on ? "Added to compare" : "Removed from compare");
         });
       });
     }
 
-    function viewProducts(){
+    function viewProducts() {
       badge.textContent = "Shop";
       app.innerHTML = `
         <section class="section">
@@ -765,20 +1049,20 @@
         </section>
       `;
 
-      const grid=document.getElementById("grid");
-      const q=document.getElementById("q");
-      const panel=document.getElementById("panel");
-      const size=document.getElementById("size");
-      const sort=document.getElementById("sort");
+      const grid = document.getElementById("grid");
+      const q = document.getElementById("q");
+      const panel = document.getElementById("panel");
+      const size = document.getElementById("size");
+      const sort = document.getElementById("sort");
 
-      function render(){
+      function render() {
         grid.innerHTML = renderCatalogGrid({
-          query:q.value, sort:sort.value, panel:panel.value, size:size.value
+          query: q.value, sort: sort.value, panel: panel.value, size: size.value
         });
         wireProductButtons(grid);
       }
 
-      ["input","change"].forEach(evt=>{
+      ["input", "change"].forEach(evt => {
         q.addEventListener(evt, render);
         panel.addEventListener(evt, render);
         size.addEventListener(evt, render);
@@ -788,9 +1072,9 @@
       render();
     }
 
-    function viewFavorites(){
+    function viewFavorites() {
       badge.textContent = "Favorites";
-      const favs=getFavs().map(findTV).filter(Boolean);
+      const favs = getFavs().map(findTV).filter(Boolean);
 
       app.innerHTML = `
         <section class="section">
@@ -800,8 +1084,7 @@
           </div>
 
           <div class="grid" id="favGrid">
-            ${
-              favs.length ? favs.map(tv=>`
+            ${favs.length ? favs.map(tv => `
                 <div class="card product">
                   <div class="imgwrap"><img src="${tv.image}" alt="${tv.name}" loading="lazy"></div>
                   <div class="body">
@@ -820,7 +1103,7 @@
                   </div>
                 </div>
               `).join("") : `<div class="notice">No favorites yet. Save TVs from the Shop page.</div>`
-            }
+        }
           </div>
 
           <div class="footer">
@@ -829,32 +1112,32 @@
         </section>
       `;
 
-      const root=app;
-      root.querySelectorAll("[data-add]").forEach(b=>{
-        b.addEventListener("click", ()=>{ addToCart(b.dataset.add,1); toast("Added to cart"); });
+      const root = app;
+      root.querySelectorAll("[data-add]").forEach(b => {
+        b.addEventListener("click", () => { addToCart(b.dataset.add, 1); toast("Added to cart"); });
       });
-      root.querySelectorAll("[data-removefav]").forEach(b=>{
-        b.addEventListener("click", ()=>{
-          const id=b.dataset.removefav;
-          const s=new Set(getFavs()); s.delete(id); setFavs([...s]);
+      root.querySelectorAll("[data-removefav]").forEach(b => {
+        b.addEventListener("click", () => {
+          const id = b.dataset.removefav;
+          const s = new Set(getFavs()); s.delete(id); setFavs([...s]);
           toast("Removed from favorites");
-          location.hash="#/favorites";
+          location.hash = "#/favorites";
         });
       });
-      root.querySelectorAll("[data-compare]").forEach(b=>{
-        b.addEventListener("click", ()=>{
+      root.querySelectorAll("[data-compare]").forEach(b => {
+        b.addEventListener("click", () => {
           toggleCompare(b.dataset.compare);
           toast("Updated compare list");
         });
       });
     }
 
-    function viewCompare(){
+    function viewCompare() {
       badge.textContent = "Compare";
-      const ids=getCompare();
-      const list=ids.map(findTV).filter(Boolean);
+      const ids = getCompare();
+      const list = ids.map(findTV).filter(Boolean);
 
-      if(!list.length){
+      if (!list.length) {
         app.innerHTML = `
           <section class="section">
             <div class="notice">Pick up to 3 TVs to compare from <a href="#/products"><b>Shop TVs</b></a>.</div>
@@ -865,17 +1148,17 @@
       }
 
       const rows = [
-        ["Model", (tv)=> tv.name],
-        ["Price", (tv)=> formatINR(tv.price)],
-        ["Size", (tv)=> `${tv.sizeIn}”`],
-        ["Panel", (tv)=> tv.panel],
-        ["Resolution", (tv)=> tv.resolution],
-        ["Refresh rate", (tv)=> `${tv.refreshHz}Hz`],
-        ["HDR", (tv)=> tv.hdr],
-        ["Gaming", (tv)=> tv.gaming],
-        ["Audio", (tv)=> tv.audio],
-        ["OS", (tv)=> tv.os],
-        ["Warranty", (tv)=> tv.warranty]
+        ["Model", (tv) => tv.name],
+        ["Price", (tv) => formatINR(tv.price)],
+        ["Size", (tv) => `${tv.sizeIn}”`],
+        ["Panel", (tv) => tv.panel],
+        ["Resolution", (tv) => tv.resolution],
+        ["Refresh rate", (tv) => `${tv.refreshHz}Hz`],
+        ["HDR", (tv) => tv.hdr],
+        ["Gaming", (tv) => tv.gaming],
+        ["Audio", (tv) => tv.audio],
+        ["OS", (tv) => tv.os],
+        ["Warranty", (tv) => tv.warranty]
       ];
 
       app.innerHTML = `
@@ -894,8 +1177,7 @@
                 <thead>
                   <tr>
                     <th>Spec</th>
-                    ${
-                      list.map(tv=>`
+                    ${list.map(tv => `
                         <th>
                           <div style="display:flex; gap:10px; align-items:center;">
                             <img src="${tv.image}" alt="${tv.name}" style="width:70px;height:50px;object-fit:contain;">
@@ -909,19 +1191,19 @@
                           </div>
                         </th>
                       `).join("")
-                    }
+        }
                   </tr>
                 </thead>
                 <tbody>
-                  ${rows.map(([label, fn])=>`
+                  ${rows.map(([label, fn]) => `
                     <tr>
                       <td><b>${label}</b></td>
-                      ${list.map(tv=>`<td>${fn(tv)}</td>`).join("")}
+                      ${list.map(tv => `<td>${fn(tv)}</td>`).join("")}
                     </tr>
                   `).join("")}
                   <tr>
                     <td><b>Actions</b></td>
-                    ${list.map(tv=>`
+                    ${list.map(tv => `
                       <td>
                         <button class="btn btn-primary" data-add="${tv.id}">Add to cart</button>
                         <button class="btn" data-fav="${tv.id}">Favorite</button>
@@ -939,25 +1221,25 @@
         </section>
       `;
 
-      document.getElementById("clearCompareBtn").addEventListener("click", ()=>{
-        clearCompare(); toast("Cleared compare list"); location.hash="#/compare";
+      document.getElementById("clearCompareBtn").addEventListener("click", () => {
+        clearCompare(); toast("Cleared compare list"); location.hash = "#/compare";
       });
-      app.querySelectorAll("[data-removecmp]").forEach(b=>{
-        b.addEventListener("click", ()=>{
-          const id=b.dataset.removecmp;
-          const s=new Set(getCompare()); s.delete(id); setCompare([...s]);
-          toast("Removed from compare"); location.hash="#/compare";
+      app.querySelectorAll("[data-removecmp]").forEach(b => {
+        b.addEventListener("click", () => {
+          const id = b.dataset.removecmp;
+          const s = new Set(getCompare()); s.delete(id); setCompare([...s]);
+          toast("Removed from compare"); location.hash = "#/compare";
         });
       });
-      app.querySelectorAll("[data-add]").forEach(b=>{
-        b.addEventListener("click", ()=>{ addToCart(b.dataset.add,1); toast("Added to cart"); });
+      app.querySelectorAll("[data-add]").forEach(b => {
+        b.addEventListener("click", () => { addToCart(b.dataset.add, 1); toast("Added to cart"); });
       });
-      app.querySelectorAll("[data-fav]").forEach(b=>{
-        b.addEventListener("click", ()=>{ toggleFav(b.dataset.fav); toast("Updated favorites"); });
+      app.querySelectorAll("[data-fav]").forEach(b => {
+        b.addEventListener("click", () => { toggleFav(b.dataset.fav); toast("Updated favorites"); });
       });
     }
 
-    function viewCart(){
+    function viewCart() {
       badge.textContent = "Cart";
 
       app.innerHTML = `
@@ -979,10 +1261,10 @@
       const tableWrap = document.getElementById("cartTable");
       const summaryWrap = document.getElementById("cartSummary");
 
-      function render(){
+      function render() {
         const t = calcCartTotals();
 
-        if(!t.items.length){
+        if (!t.items.length) {
           tableWrap.innerHTML = `
             <div class="notice">
               Your cart is empty. Add TVs from
@@ -1012,7 +1294,7 @@
               </tr>
             </thead>
             <tbody>
-              ${t.items.map(it=>`
+              ${t.items.map(it => `
                 <tr>
                   <td>
                     <div style="display:flex; gap:12px; align-items:center;">
@@ -1072,7 +1354,7 @@
       // Event delegation
       tableWrap.addEventListener("click", (e) => {
         const btn = e.target.closest("[data-remove]");
-        if(!btn) return;
+        if (!btn) return;
         setQty(btn.dataset.remove, 0);
         toast("Removed item");
         render();
@@ -1080,14 +1362,14 @@
 
       tableWrap.addEventListener("change", (e) => {
         const inp = e.target.closest("[data-qty]");
-        if(!inp) return;
+        if (!inp) return;
         const qty = Number(inp.value);
         setQty(inp.dataset.qty, qty > 0 ? qty : 1);
         render();
       });
 
       summaryWrap.addEventListener("click", (e) => {
-        if(e.target && e.target.id === "clearCartBtn"){
+        if (e.target && e.target.id === "clearCartBtn") {
           clearCart();
           toast("Cart cleared");
           render();
@@ -1097,9 +1379,9 @@
       render();
     }
 
-    function viewCheckout(){
+    function viewCheckout() {
       badge.textContent = "Checkout";
-      const t=calcCartTotals();
+      const t = calcCartTotals();
 
       app.innerHTML = `
         <section class="section">
@@ -1151,17 +1433,17 @@
         </section>
       `;
 
-      const sum=document.getElementById("orderSummary");
-      const form=document.getElementById("checkoutForm");
+      const sum = document.getElementById("orderSummary");
+      const form = document.getElementById("checkoutForm");
 
-      if(!t.items.length){
+      if (!t.items.length) {
         sum.innerHTML = `
           <div class="summary">
             <div class="notice">Your cart is empty. Add items first.</div>
             <a class="btn btn-primary" href="#/products" style="display:block;text-align:center;margin-top:12px;">Shop TVs</a>
           </div>
         `;
-        form.style.display="none";
+        form.style.display = "none";
         return;
       }
 
@@ -1172,7 +1454,7 @@
             <div class="sub">${t.items.length} item(s)</div>
           </div>
 
-          ${t.items.map(it=>`
+          ${t.items.map(it => `
             <div class="summary-row"><span>${it.series} ${it.sizeIn}” × ${it.qty}</span><b>${formatINR(it.line)}</b></div>
           `).join("")}
 
@@ -1185,21 +1467,21 @@
         </div>
       `;
 
-      form.addEventListener("submit", (e)=>{
+      form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const fd=new FormData(form);
-        const customer=Object.fromEntries(fd.entries());
-        const order=placeOrder(customer);
-        if(!order){ alert("Cart is empty."); return; }
+        const fd = new FormData(form);
+        const customer = Object.fromEntries(fd.entries());
+        const order = placeOrder(customer);
+        if (!order) { alert("Cart is empty."); return; }
         toast("Payment successful (dummy)");
-        location.hash="#/confirmation";
+        location.hash = "#/confirmation";
       });
     }
 
-    function viewConfirmation(){
+    function viewConfirmation() {
       badge.textContent = "Confirmation";
-      const order=getLastOrder();
-      if(!order){
+      const order = getLastOrder();
+      if (!order) {
         app.innerHTML = `
           <section class="section">
             <div class="card card-pad glow">
@@ -1218,7 +1500,7 @@
         return;
       }
 
-      const dt=new Date(order.createdAt);
+      const dt = new Date(order.createdAt);
       app.innerHTML = `
         <section class="section">
           <div class="card card-pad glow">
@@ -1251,7 +1533,7 @@
                 </tr>
               </thead>
               <tbody>
-                ${order.items.map(it=>`
+                ${order.items.map(it => `
                   <tr>
                     <td>
                       <div style="display:flex; gap:12px; align-items:center;">
@@ -1298,26 +1580,37 @@
       `;
     }
 
-    // ========= Router =========
-    function route(){
+    function route() {
       updateBadges();
-      const h=(location.hash||"#/").replace("#","");
-      const path=h.startsWith("/")?h:"/"+h;
+      const h = (location.hash || "#/").replace("#", "");
+      const path = h.startsWith("/") ? h : "/" + h;
 
-      if(path==="/" ) viewHome();
-      else if(path==="/products") viewProducts();
-      else if(path==="/compare") viewCompare();
-      else if(path==="/favorites") viewFavorites();
-      else if(path==="/cart") viewCart();
-      else if(path==="/checkout") viewCheckout();
-      else if(path==="/confirmation") viewConfirmation();
-      else location.hash="#/";
+      // render page first
+      if (path === "#/") viewHome();
+      else if (path === "/products") viewProducts();
+      else if (path === "/compare") viewCompare();
+      else if (path === "/favorites") viewFavorites();
+      else if (path === "/cart") viewCart();
+      else if (path === "/checkout") viewCheckout();
+      else if (path === "/confirmation") viewConfirmation();
+      else location.hash = "#/";
+
+      // then track SPA pageview
+      if (typeof window.Genesys === "function") {
+        Genesys("command", "Journey.pageview", {
+          page: route,
+          title: document.title
+        });
+      }
+      trackJourneyPage();
     }
 
     window.addEventListener("hashchange", route);
+    window.addEventListener("DOMContentLoaded", route);
     updateBadges();
-    if(!location.hash) location.hash="#/";
+    if (!location.hash) location.hash = "#/";
     route();
   </script>
 </body>
+
 </html>
